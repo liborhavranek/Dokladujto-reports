@@ -115,14 +115,13 @@
         .then(csvText => {
             const { headers, rows } = parseCSV(csvText);
             const getIndex = (name) => headers.findIndex(h => h.toUpperCase() === name.toUpperCase());
-            const nameIndex = getIndex('NAME');
+            const describeIndex = getIndex('DESCRIBE');
+            const testIndex = getIndex('TEST');
             const statusIndex = getIndex('STATUS');
-            const durationIndex = getIndex('DURATION IN MS');
-            const startIndex = getIndex('START TIME');
-            const stopIndex = getIndex('STOP TIME');
-            const suiteIndex = getIndex('SUITE');
+            const durationIndex = getIndex('DURATION');
+            const timestampLocalIndex = getIndex('TIMESTAMPLOCAL');
 
-            rows.sort((a, b) => normalizeDate(a[startIndex]) - normalizeDate(b[startIndex]));
+            rows.sort((a, b) => new Date(a[timestampLocalIndex]) - new Date(b[timestampLocalIndex]));
 
             let passed = 0, failed = 0, unknown = 0;
             rows.forEach(row => {
@@ -133,7 +132,7 @@
             });
 
             document.getElementById('testInfo').classList.remove('d-none');
-            document.getElementById('testDate').textContent = normalizeDate(rows[0]?.[startIndex])?.toLocaleString() || 'Neznámé datum';
+            document.getElementById('testDate').textContent = rows[0]?.[timestampLocalIndex] || 'Neznámé datum';
             document.getElementById('passedCount').textContent = passed;
             document.getElementById('failedCount').textContent = failed;
             document.getElementById('unknownCount').textContent = unknown;
@@ -159,7 +158,7 @@
 
             const grouped = {};
             rows.forEach(row => {
-                const suite = row[suiteIndex] || 'Bez SUITE';
+                const suite = row[describeIndex] || 'Bez popisu';
                 if (!grouped[suite]) grouped[suite] = [];
                 grouped[suite].push(row);
             });
@@ -192,14 +191,13 @@
                     else if (status === 'failed') { iconClass = 'status-failed'; symbol = '✖'; }
 
                     return `
-                        <tr>
-                            <td><span class="status-icon ${iconClass}">${symbol}</span></td>
-                            <td>${row[nameIndex] || ''}</td>
-                            <td>${row[durationIndex]}</td>
-                            <td>${normalizeDate(row[startIndex])?.toLocaleString() || ''}</td>
-                            <td>${normalizeDate(row[stopIndex])?.toLocaleString() || ''}</td>
-                        </tr>
-                    `;
+        <tr>
+            <td><span class="status-icon ${iconClass}">${symbol}</span></td>
+            <td>${row[testIndex] || ''}</td>
+            <td>${row[durationIndex]}</td>
+            <td>${row[timestampLocalIndex]}</td>
+        </tr>
+    `;
                 }).join('');
 
                 accordionItem.innerHTML = `
@@ -213,15 +211,14 @@
                         <div class="accordion-body p-0">
                             <div class="table-responsive">
                                 <table class="table table-sm table-striped m-0 align-middle rounded-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Stav</th>
-                                            <th>Název testu</th>
-                                            <th>Trvání (ms)</th>
-                                            <th>Začátek</th>
-                                            <th>Konec</th>
-                                        </tr>
-                                    </thead>
+    <thead>
+  <tr>
+    <th>Stav</th>
+    <th>Název testu</th>
+    <th>Trvání (ms)</th>
+    <th>Čas</th>
+  </tr>
+</thead>
                                     <tbody>${rowsHtml}</tbody>
                                 </table>
                             </div>

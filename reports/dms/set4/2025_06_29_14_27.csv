@@ -1,0 +1,6 @@
+"describe","test","status","duration","timestamp","timestampLocal"
+"Registration test company @high @middle @low","Repeatedly checks and deletes companies until none remain","passed",13733,"2025-06-29T12:26:28.327Z","29. 06. 2025 14:26"
+"Registration test company @high @middle @low","Registration company","passed",13311,"2025-06-29T12:26:41.661Z","29. 06. 2025 14:26"
+"Invite user in company @high @middle @low","Send invitation to the user","passed",12184,"2025-06-29T12:26:54.515Z","29. 06. 2025 14:26"
+"Invite user in company @high @middle @low","Accept invitation","passed",6756,"2025-06-29T12:27:01.304Z","29. 06. 2025 14:27"
+"Delete company @high @middle @low","Delete company","passed",20722,"2025-06-29T12:27:22.641Z","29. 06. 2025 14:27"
