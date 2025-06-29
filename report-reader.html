@@ -5,71 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Zobrazení reportu</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-        }
-        .hero {
-            position: relative;
-            width: 100%;
-            min-height: 100vh;
-            overflow: hidden;
-        }
+        html, body { margin: 0; padding: 0; height: 100%; }
+        .hero { position: relative; width: 100%; min-height: 100vh; overflow: hidden; }
         .hero object {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none; z-index: 0;
         }
-        .hero .container {
-            position: relative;
-            z-index: 1;
-            padding-top: 5rem;
-            padding-bottom: 5rem;
-        }
-        .accordion-button:not(.collapsed) {
-            background-color: #f7f9fc;
-        }
-        .accordion-collapse {
-            transition: height 0.25s ease;
-        }
-        .table.rounded-table {
-            border-collapse: separate;
-            border-spacing: 0;
-            overflow: hidden;
-            padding-left: 4.5rem;
-        }
-        .accordion-body .table tr td,
-        .accordion-body .table th {
-            border-radius: 0 !important;
-        }
+        .hero .container { position: relative; z-index: 1; padding-top: 5rem; padding-bottom: 5rem; }
+        .accordion-button:not(.collapsed) { background-color: #f7f9fc; }
+        .accordion-collapse { transition: height 0.25s ease; }
+        .table.rounded-table { border-collapse: separate; border-spacing: 0; overflow: hidden; padding-left: 4.5rem; }
+        .accordion-body .table tr td, .accordion-body .table th { border-radius: 0 !important; }
         .status-icon {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: inline-block;
-            text-align: center;
-            font-size: 14px;
-            line-height: 20px;
-            color: white;
-            font-weight: bold;
-            margin-right: 0.5rem;
+            width: 20px; height: 20px; border-radius: 50%;
+            display: inline-block; text-align: center;
+            font-size: 14px; line-height: 20px; color: white;
+            font-weight: bold; margin-right: 0.5rem;
         }
         .status-passed { background-color: #28a745; }
         .status-failed { background-color: #dc3545; }
         .status-unknown { background-color: #6c757d; }
-        .test-info-card {
-            background-color: #ffffffcc;
-            border: 1px solid #dee2e6;
-            border-radius: 0.75rem;
-            padding: 1rem 1.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        .card-body canvas {
+            max-width: 100%;
+            height: 280px !important; /* zajištění stejné výšky jako karta vlevo */
         }
     </style>
 </head>
@@ -78,8 +39,44 @@
 <section class="hero">
     <object type="image/svg+xml" data="templates/background.svg"></object>
     <div class="container">
-        <h1 class="display-5 fw-bold mb-4">Seznam testů podle SUITE</h1>
-        <div id="testInfo" class="test-info-card d-none"></div>
+        <h1 class="display-5 fw-bold mb-4">Seznam testů</h1>
+        <div class="row mb-4">
+            <!-- Info karta -->
+            <div class="col-md-4">
+                <div id="testInfo" class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-muted fw-bold mb-3">🗓️ Datum testování</h5>
+                        <p id="testDate" class="fs-5 mb-4"></p>
+                        <h6 class="card-subtitle text-muted mb-3">📊 Výsledky</h6>
+                        <ul class="list-group list-group-flush fs-6">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><span class="status-icon status-passed me-2">✔</span>Úspěšné</span>
+                                <span class="badge bg-success rounded-pill" id="passedCount">0</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><span class="status-icon status-failed me-2">✖</span>Neúspěšné</span>
+                                <span class="badge bg-danger rounded-pill" id="failedCount">0</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><span class="status-icon status-unknown me-2">?</span>Neznámé</span>
+                                <span class="badge bg-secondary rounded-pill" id="unknownCount">0</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Karta s grafem -->
+            <div class="col-md-4">
+                <div id="testInfo" class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-muted fw-bold mb-3">🧁 Graf výsledků</h5>
+                        <canvas id="testPieChart" width="300" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="accordion" id="accordionSuites"></div>
     </div>
 </section>
@@ -90,16 +87,10 @@
     const typ = params.get('typ');
     const file = params.get('file');
 
-    console.log('🔍 URL parametry:', { modul, typ, file });
-
     const parseCSV = (text) => {
         const lines = text.split('\n').filter(l => l.trim().length > 0);
         const headers = lines[0].split(',').map(h => h.replace(/^"|"$/g, '').trim());
-        const rows = lines.slice(1).map(line => {
-            return line.split(',').map(cell => cell.replace(/^"|"$/g, '').trim());
-        });
-        console.log('📄 CSV hlavičky:', headers);
-        console.log('📄 CSV řádků:', rows.length);
+        const rows = lines.slice(1).map(line => line.split(',').map(cell => cell.replace(/^"|"$/g, '').trim()));
         return { headers, rows };
     };
 
@@ -113,10 +104,8 @@
         throw new Error('Chybějící parametry');
     }
 
-    const basePath = window.location.pathname.split('/')[1]; // "Dokladujto-reports"
+    const basePath = window.location.pathname.split('/')[1];
     const csvPath = `/${basePath}/reports/${modul}/${typ}/${file}`;
-    console.log('📁 Cesta k CSV:', csvPath);
-
 
     fetch(csvPath)
         .then(res => {
@@ -125,7 +114,6 @@
         })
         .then(csvText => {
             const { headers, rows } = parseCSV(csvText);
-
             const getIndex = (name) => headers.findIndex(h => h.toUpperCase() === name.toUpperCase());
             const nameIndex = getIndex('NAME');
             const statusIndex = getIndex('STATUS');
@@ -133,15 +121,6 @@
             const startIndex = getIndex('START TIME');
             const stopIndex = getIndex('STOP TIME');
             const suiteIndex = getIndex('SUITE');
-
-            console.log('🔢 Indexy sloupců:', {
-                nameIndex,
-                statusIndex,
-                durationIndex,
-                startIndex,
-                stopIndex,
-                suiteIndex
-            });
 
             rows.sort((a, b) => normalizeDate(a[startIndex]) - normalizeDate(b[startIndex]));
 
@@ -153,18 +132,30 @@
                 else unknown++;
             });
 
-            console.log('✅ Výsledky testů:', { passed, failed, unknown });
+            document.getElementById('testInfo').classList.remove('d-none');
+            document.getElementById('testDate').textContent = normalizeDate(rows[0]?.[startIndex])?.toLocaleString() || 'Neznámé datum';
+            document.getElementById('passedCount').textContent = passed;
+            document.getElementById('failedCount').textContent = failed;
+            document.getElementById('unknownCount').textContent = unknown;
 
-            const testInfo = document.getElementById('testInfo');
-            const testDate = normalizeDate(rows[0]?.[startIndex]);
-            testInfo.classList.remove('d-none');
-            testInfo.innerHTML = `
-                <strong>🗓️ Datum testování:</strong> ${testDate ? testDate.toLocaleString() : 'Neznámé datum'}<br/>
-                <strong>📊 Výsledky:</strong>
-                <span class="status-icon status-passed">✔</span> ${passed}
-                <span class="status-icon status-failed">✖</span> ${failed}
-                <span class="status-icon status-unknown">?</span> ${unknown}
-            `;
+            // 🎨 Pie chart
+            const ctx = document.getElementById('testPieChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Úspěšné', 'Neúspěšné', 'Neznámé'],
+                    datasets: [{
+                        data: [passed, failed, unknown],
+                        backgroundColor: ['#28a745', '#dc3545', '#6c757d']
+                    }]
+                },
+                options: {
+                    cutout: '60%',
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
 
             const grouped = {};
             rows.forEach(row => {
@@ -172,8 +163,6 @@
                 if (!grouped[suite]) grouped[suite] = [];
                 grouped[suite].push(row);
             });
-
-            console.log('🧩 Seskupeno do SUITE:', Object.keys(grouped));
 
             const accordion = document.getElementById('accordionSuites');
             let idx = 0;
@@ -185,8 +174,7 @@
                 const suiteId = `suite-${idx}`;
                 const suiteCollapseId = `collapse-${idx}`;
 
-                let hasFailed = false;
-                let hasPassed = false;
+                let hasFailed = false, hasPassed = false;
                 tests.forEach(row => {
                     const status = (row[statusIndex] || '').toLowerCase();
                     if (status === 'failed') hasFailed = true;
@@ -194,11 +182,8 @@
                 });
 
                 let suiteIconClass = 'status-unknown', suiteSymbol = '?';
-                if (hasFailed) {
-                    suiteIconClass = 'status-failed'; suiteSymbol = '✖';
-                } else if (hasPassed) {
-                    suiteIconClass = 'status-passed'; suiteSymbol = '✔';
-                }
+                if (hasFailed) { suiteIconClass = 'status-failed'; suiteSymbol = '✖'; }
+                else if (hasPassed) { suiteIconClass = 'status-passed'; suiteSymbol = '✔'; }
 
                 const rowsHtml = tests.map(row => {
                     const status = (row[statusIndex] || '').toLowerCase();
@@ -243,19 +228,15 @@
                         </div>
                     </div>
                 `;
-
                 accordion.appendChild(accordionItem);
                 idx++;
             });
-
-            console.log('✅ Vykresleno do DOM:', idx, 'SUITE bloků');
         })
         .catch(err => {
             document.getElementById('accordionSuites').innerHTML = `<div class="text-danger">${err.message}</div>`;
             console.error('❌ Chyba při zpracování:', err);
         });
 </script>
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
