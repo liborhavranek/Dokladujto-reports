@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zobrazení reportu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+        .hero {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        .hero object {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .hero .container {
+            position: relative;
+            z-index: 1;
+            padding-top: 5rem;
+            padding-bottom: 5rem;
+        }
+        .accordion-button:not(.collapsed) {
+            background-color: #f7f9fc;
+        }
+        .accordion-collapse {
+            transition: height 0.25s ease;
+        }
+        .table.rounded-table {
+            border-collapse: separate;
+            border-spacing: 0;
+            overflow: hidden;
+            padding-left: 4.5rem;
+        }
+        .accordion-body .table tr td,
+        .accordion-body .table th {
+            border-radius: 0 !important;
+        }
+        .status-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: inline-block;
+            text-align: center;
+            font-size: 14px;
+            line-height: 20px;
+            color: white;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+        .status-passed { background-color: #28a745; }
+        .status-failed { background-color: #dc3545; }
+        .status-unknown { background-color: #6c757d; }
+        .test-info-card {
+            background-color: #ffffffcc;
+            border: 1px solid #dee2e6;
+            border-radius: 0.75rem;
+            padding: 1rem 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body>
+
+<section class="hero">
+    <object type="image/svg+xml" data="templates/background.svg"></object>
+    <div class="container">
+        <h1 class="display-5 fw-bold mb-4">Seznam testů podle SUITE</h1>
+        <div id="testInfo" class="test-info-card d-none"></div>
+        <div class="accordion" id="accordionSuites"></div>
+    </div>
+</section>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const modul = params.get('modul');
+    const typ = params.get('typ');
+    const file = params.get('file');
+
+    console.log('🔍 URL parametry:', { modul, typ, file });
+
+    const parseCSV = (text) => {
+        const lines = text.split('\n').filter(l => l.trim().length > 0);
+        const headers = lines[0].split(',').map(h => h.replace(/^"|"$/g, '').trim());
+        const rows = lines.slice(1).map(line => {
+            return line.split(',').map(cell => cell.replace(/^"|"$/g, '').trim());
+        });
+        console.log('📄 CSV hlavičky:', headers);
+        console.log('📄 CSV řádků:', rows.length);
+        return { headers, rows };
+    };
+
+    const normalizeDate = (str) => {
+        if (!str) return null;
+        return new Date(str.replace('CEST', 'GMT+0200').replace('CET', 'GMT+0100'));
+    };
+
+    if (!modul || !typ || !file) {
+        document.getElementById('accordionSuites').innerHTML = '<div class="text-danger">Chybí parametry v URL.</div>';
+        throw new Error('Chybějící parametry');
+    }
+
+    const basePath = window.location.pathname.split('/')[1]; // "Dokladujto-reports"
+    const csvPath = `/${basePath}/reports/${modul}/${typ}/${file}`;
+    console.log('📁 Cesta k CSV:', csvPath);
+
+
+    fetch(csvPath)
+        .then(res => {
+            if (!res.ok) throw new Error(`Nepodařilo se načíst soubor: ${res.status}`);
+            return res.text();
+        })
+        .then(csvText => {
+            const { headers, rows } = parseCSV(csvText);
+
+            const getIndex = (name) => headers.findIndex(h => h.toUpperCase() === name.toUpperCase());
+            const nameIndex = getIndex('NAME');
+            const statusIndex = getIndex('STATUS');
+            const durationIndex = getIndex('DURATION IN MS');
+            const startIndex = getIndex('START TIME');
+            const stopIndex = getIndex('STOP TIME');
+            const suiteIndex = getIndex('SUITE');
+
+            console.log('🔢 Indexy sloupců:', {
+                nameIndex,
+                statusIndex,
+                durationIndex,
+                startIndex,
+                stopIndex,
+                suiteIndex
+            });
+
+            rows.sort((a, b) => normalizeDate(a[startIndex]) - normalizeDate(b[startIndex]));
+
+            let passed = 0, failed = 0, unknown = 0;
+            rows.forEach(row => {
+                const status = (row[statusIndex] || '').toLowerCase();
+                if (status === 'passed') passed++;
+                else if (status === 'failed') failed++;
+                else unknown++;
+            });
+
+            console.log('✅ Výsledky testů:', { passed, failed, unknown });
+
+            const testInfo = document.getElementById('testInfo');
+            const testDate = normalizeDate(rows[0]?.[startIndex]);
+            testInfo.classList.remove('d-none');
+            testInfo.innerHTML = `
+                <strong>🗓️ Datum testování:</strong> ${testDate ? testDate.toLocaleString() : 'Neznámé datum'}<br/>
+                <strong>📊 Výsledky:</strong>
+                <span class="status-icon status-passed">✔</span> ${passed}
+                <span class="status-icon status-failed">✖</span> ${failed}
+                <span class="status-icon status-unknown">?</span> ${unknown}
+            `;
+
+            const grouped = {};
+            rows.forEach(row => {
+                const suite = row[suiteIndex] || 'Bez SUITE';
+                if (!grouped[suite]) grouped[suite] = [];
+                grouped[suite].push(row);
+            });
+
+            console.log('🧩 Seskupeno do SUITE:', Object.keys(grouped));
+
+            const accordion = document.getElementById('accordionSuites');
+            let idx = 0;
+
+            Object.entries(grouped).forEach(([suiteName, tests]) => {
+                const accordionItem = document.createElement('div');
+                accordionItem.className = 'accordion-item';
+
+                const suiteId = `suite-${idx}`;
+                const suiteCollapseId = `collapse-${idx}`;
+
+                let hasFailed = false;
+                let hasPassed = false;
+                tests.forEach(row => {
+                    const status = (row[statusIndex] || '').toLowerCase();
+                    if (status === 'failed') hasFailed = true;
+                    if (status === 'passed') hasPassed = true;
+                });
+
+                let suiteIconClass = 'status-unknown', suiteSymbol = '?';
+                if (hasFailed) {
+                    suiteIconClass = 'status-failed'; suiteSymbol = '✖';
+                } else if (hasPassed) {
+                    suiteIconClass = 'status-passed'; suiteSymbol = '✔';
+                }
+
+                const rowsHtml = tests.map(row => {
+                    const status = (row[statusIndex] || '').toLowerCase();
+                    let iconClass = 'status-unknown', symbol = '?';
+                    if (status === 'passed') { iconClass = 'status-passed'; symbol = '✔'; }
+                    else if (status === 'failed') { iconClass = 'status-failed'; symbol = '✖'; }
+
+                    return `
+                        <tr>
+                            <td><span class="status-icon ${iconClass}">${symbol}</span></td>
+                            <td>${row[nameIndex] || ''}</td>
+                            <td>${row[durationIndex]}</td>
+                            <td>${normalizeDate(row[startIndex])?.toLocaleString() || ''}</td>
+                            <td>${normalizeDate(row[stopIndex])?.toLocaleString() || ''}</td>
+                        </tr>
+                    `;
+                }).join('');
+
+                accordionItem.innerHTML = `
+                    <h2 class="accordion-header" id="${suiteId}">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#${suiteCollapseId}" aria-expanded="false" aria-controls="${suiteCollapseId}">
+                            <span class="status-icon ${suiteIconClass}">${suiteSymbol}</span> ${suiteName}
+                        </button>
+                    </h2>
+                    <div id="${suiteCollapseId}" class="accordion-collapse collapse" aria-labelledby="${suiteId}" data-bs-parent="#accordionSuites">
+                        <div class="accordion-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-sm table-striped m-0 align-middle rounded-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Stav</th>
+                                            <th>Název testu</th>
+                                            <th>Trvání (ms)</th>
+                                            <th>Začátek</th>
+                                            <th>Konec</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>${rowsHtml}</tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                accordion.appendChild(accordionItem);
+                idx++;
+            });
+
+            console.log('✅ Vykresleno do DOM:', idx, 'SUITE bloků');
+        })
+        .catch(err => {
+            document.getElementById('accordionSuites').innerHTML = `<div class="text-danger">${err.message}</div>`;
+            console.error('❌ Chyba při zpracování:', err);
+        });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

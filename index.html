@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Testovací reporty</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .hero object {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 1;
+            height: 100%;
+        }
+
+        .hero-card {
+            max-width: 960px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding-top: 110px;
+            padding-bottom: 110px;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<section class="hero">
+    <object type="image/svg+xml" data="templates/background.svg"></object>
+
+    <div class="container d-flex flex-column justify-content-center align-items-center text-center h-100">
+        <div class="hero-card shadow-lg rounded-4 w-100" style="
+    max-width: 1140px;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 60px rgba(0,0,0,0.1);
+">
+            <h1 class="display-3 fw-bold mb-3">Testovací reporty</h1>
+            <p class="lead text-muted mb-4">
+                Vizuální přehled výsledků automatizovaných testů.
+                <br class="d-none d-md-block" />
+                Přehledně, spolehlivě a snadno dostupné.
+            </p>
+            <div class="d-grid gap-3 col-12 col-md-6 mx-auto mb-4">
+                <a href="templates/cross.html" class="btn btn-primary btn-lg rounded-pill btn-fill-effect">
+                    <span>Zobrazit reporty</span>
+                </a>
+                <a href="#navod" class="btn btn-outline-primary btn-lg rounded-pill btn-fill-effect">
+                    <span>Návod ⬇</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section id="navod" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="mb-4">Jak používat reporty</h2>
+        <p>...</p>
+    </div>
+</section>
+
+</body>
+</html>
+
