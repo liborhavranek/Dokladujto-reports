@@ -42,6 +42,132 @@
             padding-bottom: 110px;
         }
 
+        .report-wix-section {
+            background-color: #fff;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .section-subtitle {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+        }
+
+        .report-wix-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+        }
+
+        .report-wix-card {
+            border-radius: 24px;
+            padding: 32px 24px;
+            color: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+        }
+
+        .report-wix-card.green {
+            background-color: #e9fef1;
+        }
+        .report-wix-card.orange {
+            background-color: #fff2e5;
+        }
+        .report-wix-card.blue {
+            background-color: #e7f1ff;
+        }
+
+        .report-image img {
+            height: 64px;
+            margin-bottom: 20px;
+        }
+
+        .report-wix-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .report-wix-card p {
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+        }
+
+        .report-wix-card code {
+            background-color: rgba(0, 0, 0, 0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .report-wix-card pre {
+            text-align: left;
+            background: rgba(0,0,0,0.04);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            overflow-x: auto;
+        }
+
+
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .report-wix-card.green {
+            background: #e9fcef;
+            padding: 36px;
+            border-radius: 24px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            color: #1a1a1a;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .report-wix-card p {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .code-blocks {
+            margin-top: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .code-row {
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 10px 14px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            font-size: 0.95rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+        }
+
+        .code-row code {
+            font-weight: 600;
+            font-family: monospace;
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 6px;
+            color: #c02f7d;
+        }
 
     </style>
 </head>
@@ -78,12 +204,91 @@
 </section>
 
 
-<section id="navod" class="py-5 bg-light">
+<section class="report-wix-section">
     <div class="container">
-        <h2 class="mb-4">Jak používat reporty</h2>
-        <p>...</p>
+        <h2 class="section-title">Jak používat testovací reporty</h2>
+        <p class="section-subtitle">Od spuštění testů až po přehledné zobrazení výsledků na GitHub Pages.</p>
+
+        <div class="report-wix-grid">
+            <!-- Box 1 -->
+            <div class="report-wix-card green">
+                <h2 class="card-title">Spuštění testů</h2>
+                <p>
+                    V projektu s testy spusť příkaz <code>npx cypress run</code>. Během běhu se každý výsledek ukládá do souboru <code>live-log.json</code>.
+                </p>
+                <p>
+                    Po dokončení testování se tento JSON automaticky převede na přehledný <strong>CSV report</strong>, který obsahuje kompletní přehled všech testů.
+                </p>
+                <div class="code-blocks">
+                    <div class="code-row">
+                        <code>live-log.json</code>
+                        <span>– průběžný výstup testů</span>
+                    </div>
+                    <div class="code-row">
+                        <code>YYYY_MM_DD_HH_mm.csv</code>
+                        <span>– finální report po doběhnutí</span>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Box 2 -->
+            <div class="report-wix-card orange">
+                <h2 class="card-title">Nahrání na GitHub</h2>
+                <p>
+                    Po vygenerování <code>CSV</code> musíš soubor ručně nahrát do projektu s výsledky:
+                </p>
+                <div class="code-row"><code>reports/reports/&lt;modul&gt;/&lt;typ&gt;/</code></div>
+
+                <p>Dále spusť skript, který aktualizuje přehled reportů:</p>
+                <div class="code-row"><code>node generate-reports1-json.js</code></div>
+
+                <p>Jakmile se vytvoří <code>reports.json</code>, commitni změny do repozitáře:</p>
+                <div class="code-row"><code>git commit -am "přidán nový report"</code></div>
+                <div class="code-row"><code>git push</code></div>
+
+                <p class="success">
+                    Výsledky se pak automaticky zobrazí na GitHub Pages podle URL report-readeru.
+                </p>
+            </div>
+
+
+            <!-- Box 3 -->
+            <div class="report-wix-card blue">
+                <h2 class="card-title">Na co si dát pozor</h2>
+
+                <p>
+                    <strong>Názvy složek</strong> musí být malými písmeny, bez mezer a bez diakritiky.<br>
+                    <span class="hint">
+      ✅ Správně: <code>folder-management</code> &nbsp;&nbsp; ❌ Špatně: <code>Správa složek</code>
+    </span>
+                </p>
+
+                <p>
+                    <strong>Každý test musí být ve funkci <code>describe()</code></strong> a obsahovat tag:
+                    <code>@high</code>, <code>@middle</code> nebo <code>@low</code>.
+                </p>
+
+                <p>
+                    <strong>CSV hlavička</strong> musí být přesně:<br>
+                    <code>describe,test,status,</code><br>
+                    <code>duration,timestamp,timestampLocal</code>
+
+                </p>
+
+                <p>
+                    <strong><code>reports.json</code> se negeneruje ručně!</strong><br>
+                    Použij <code>node generate-reports1-json.js</code>, jinak se stránky rozbijí.
+                </p>
+            </div>
+        </div>
     </div>
 </section>
+
+
+
+
 
 </body>
 </html>

@@ -80,14 +80,17 @@
             const list = document.createElement('ul');
             list.className = "list-group";
 
+// Seřazení od nejnovějšího
+            data[modul][typ].sort((a, b) => b.localeCompare(a));
+
             data[modul][typ].forEach(filename => {
                 const readerPath = `/${basePath}/report-reader.html?modul=${modul}&typ=${typ}&file=${filename}`;
                 const item = document.createElement('li');
                 item.className = "list-group-item d-flex justify-content-between align-items-center";
                 item.innerHTML = `
-          <span>${filename}</span>
-          <a href="${readerPath}" class="btn btn-sm btn-primary">Zobrazit</a>
-        `;
+      <span>${filename}</span>
+      <a href="${readerPath}" class="btn btn-sm btn-primary">Zobrazit</a>
+    `;
                 list.appendChild(item);
             });
 
