@@ -12,5 +12,22 @@
     "set4": [
       "2025_06_29_17_41.csv"
     ]
+  },
+  "invoice-vat-payer-accounting": {
+    "01-invoice-cz-currency": [
+      "2025_06_29_17_06.csv"
+    ],
+    "02-invoice-eur-currency": [
+      "2025_06_29_17_06.csv"
+    ],
+    "03-basic-info-and-contact": [
+      "2025_06_29_17_06.csv"
+    ],
+    "04-datum-and-payment": [
+      "2025_06_29_17_06.csv"
+    ],
+    "05-invoice-item": [
+      "2025_06_29_17_06.csv"
+    ]
   }
 }
