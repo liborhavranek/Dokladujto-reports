@@ -1,3 +1,4 @@
+# Oprava vylepšení 27 jakub předělal řaezní souborů při nahrávání vše funguje
 "describe","test","status","duration","timestamp","timestampLocal"
 "Registration test company @high @middle @low","Repeatedly checks and deletes companies until none remain","passed",14250,"2025-06-30T15:20:27.006Z","30. 06. 2025 17:20"
 "Registration test company @high @middle @low","Registration company","passed",12455,"2025-06-30T15:20:39.497Z","30. 06. 2025 17:20"

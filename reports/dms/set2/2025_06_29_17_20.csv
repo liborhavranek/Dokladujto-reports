@@ -1,3 +1,4 @@
+# Testy byli spuštěné před vylepšením 27, kde se opravovalo DMS hlavně řazení souborů, nahrávání a číselné řady
 "describe","test","status","duration","timestamp","timestampLocal"
 "Registration test company @high @middle @low","Repeatedly checks and deletes companies until none remain","passed",13379,"2025-06-29T15:13:08.282Z","29. 06. 2025 17:13"
 "Registration test company @high @middle @low","Registration company","passed",12330,"2025-06-29T15:13:20.647Z","29. 06. 2025 17:13"

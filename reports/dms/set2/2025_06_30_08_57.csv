@@ -1,3 +1,4 @@
+# Spuštění testů po opravě vylepšení 27 testy jsou funkční
 "describe","test","status","duration","timestamp","timestampLocal"
 "Registration test company @high @middle @low","Repeatedly checks and deletes companies until none remain","passed",12634,"2025-06-30T06:50:02.301Z","30. 06. 2025 08:50"
 "Registration test company @high @middle @low","Registration company","passed",12888,"2025-06-30T06:50:15.243Z","30. 06. 2025 08:50"

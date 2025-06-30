@@ -1,3 +1,4 @@
+# Spuštění testů po opravě vylepšení 27
 "describe","test","status","duration","timestamp","timestampLocal"
 "Registration company @high @middle @low","Repeatedly checks and deletes companies until none remain","passed",12707,"2025-06-30T05:21:08.070Z","30. 06. 2025 07:21"
 "Registration company @high @middle @low","Registration company","passed",14073,"2025-06-30T05:21:22.179Z","30. 06. 2025 07:21"

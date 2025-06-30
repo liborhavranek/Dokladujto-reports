@@ -30,7 +30,7 @@
         .status-unknown { background-color: #6c757d; }
         .card-body canvas {
             max-width: 100%;
-            height: 280px !important; /* zajištění stejné výšky jako karta vlevo */
+            height: 280px !important;
         }
     </style>
 </head>
@@ -41,7 +41,6 @@
     <div class="container">
         <h1 class="display-5 fw-bold mb-4">Seznam testů</h1>
         <div class="row mb-4">
-            <!-- Info karta -->
             <div class="col-md-4">
                 <div id="testInfo" class="card shadow-sm border-0 h-100">
                     <div class="card-body">
@@ -65,8 +64,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Karta s grafem -->
             <div class="col-md-4">
                 <div id="testInfo" class="card shadow-sm border-0 h-100">
                     <div class="card-body">
@@ -75,7 +72,17 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-4">
+                <div id="" class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-muted fw-bold mb-3">Poznámka</h5>
+                        <p id="csvNote" class="px-3"></p>
+                    </div>
+                </div>
+            </div>
         </div>
+
 
         <div class="accordion" id="accordionSuites"></div>
     </div>
@@ -86,18 +93,6 @@
     const modul = params.get('modul');
     const typ = params.get('typ');
     const file = params.get('file');
-
-    const parseCSV = (text) => {
-        const lines = text.split('\n').filter(l => l.trim().length > 0);
-        const headers = lines[0].split(',').map(h => h.replace(/^"|"$/g, '').trim());
-        const rows = lines.slice(1).map(line => line.split(',').map(cell => cell.replace(/^"|"$/g, '').trim()));
-        return { headers, rows };
-    };
-
-    const normalizeDate = (str) => {
-        if (!str) return null;
-        return new Date(str.replace('CEST', 'GMT+0200').replace('CET', 'GMT+0100'));
-    };
 
     if (!modul || !typ || !file) {
         document.getElementById('accordionSuites').innerHTML = '<div class="text-danger">Chybí parametry v URL.</div>';
@@ -113,7 +108,21 @@
             return res.text();
         })
         .then(csvText => {
-            const { headers, rows } = parseCSV(csvText);
+            const rawLines = csvText.split('\n');
+            const commentLine = rawLines.find(l => l.trim().startsWith('#'));
+            const commentText = commentLine ? commentLine.replace(/^#/, '').trim() : null;
+
+            const lines = rawLines.filter(l => l.trim().length > 0 && !l.trim().startsWith('#'));
+            const headers = lines[0].split(',').map(h => h.replace(/^"|"$/g, '').trim());
+            const rows = lines.slice(1).map(line => line.split(',').map(cell => cell.replace(/^"|"$/g, '').trim()));
+
+            // Zobraz poznámku
+            if (commentText) {
+                const noteEl = document.getElementById('csvNote');
+                noteEl.textContent = commentText;
+                noteEl.classList.remove('d-none');
+            }
+
             const getIndex = (name) => headers.findIndex(h => h.toUpperCase() === name.toUpperCase());
             const describeIndex = getIndex('DESCRIBE');
             const testIndex = getIndex('TEST');
@@ -137,7 +146,6 @@
             document.getElementById('failedCount').textContent = failed;
             document.getElementById('unknownCount').textContent = unknown;
 
-            // 🎨 Pie chart
             const ctx = document.getElementById('testPieChart').getContext('2d');
             new Chart(ctx, {
                 type: 'doughnut',
@@ -196,8 +204,7 @@
             <td>${row[testIndex] || ''}</td>
             <td>${row[durationIndex]}</td>
             <td>${row[timestampLocalIndex]}</td>
-        </tr>
-    `;
+        </tr>`;
                 }).join('');
 
                 accordionItem.innerHTML = `
@@ -211,20 +218,19 @@
                         <div class="accordion-body p-0">
                             <div class="table-responsive">
                                 <table class="table table-sm table-striped m-0 align-middle rounded-table">
-    <thead>
-  <tr>
-    <th>Stav</th>
-    <th>Název testu</th>
-    <th>Trvání (ms)</th>
-    <th>Čas</th>
-  </tr>
-</thead>
+                                    <thead>
+                                      <tr>
+                                        <th>Stav</th>
+                                        <th>Název testu</th>
+                                        <th>Trvání (ms)</th>
+                                        <th>Čas</th>
+                                      </tr>
+                                    </thead>
                                     <tbody>${rowsHtml}</tbody>
                                 </table>
                             </div>
                         </div>
-                    </div>
-                `;
+                    </div>`;
                 accordion.appendChild(accordionItem);
                 idx++;
             });
