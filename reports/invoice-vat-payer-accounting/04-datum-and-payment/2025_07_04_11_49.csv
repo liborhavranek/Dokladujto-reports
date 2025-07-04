@@ -1,3 +1,4 @@
+# Spadl jen jeden test opět jen alert při mazání firmy - budu opravovat
 "describe","test","status","duration","timestamp","timestampLocal"
 "Registration of a test company @high @middle @low","Repeatedly checks and deletes companies until none remain","passed",12843,"2025-07-04T09:42:12.297Z","04. 07. 2025 11:42"
 "Registration of a test company @high @middle @low","Register a new company","passed",14198,"2025-07-04T09:42:26.529Z","04. 07. 2025 11:42"
