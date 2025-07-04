@@ -1,4 +1,4 @@
-# Dva testy spadly při vytvoření firmy a smazání jsou to flaky testy kdy se nezachitila zpráva alert - budu opravovat v budoucnu
+# Dva testy spadly při vytvoření firmy a smazání jsou to flaky testy kdy se nezachitila zpráva alert - budu opravovat v budoucnu dva testy měli v názvu čárku proto jsou neznáme na příští run opraveno
 "describe","test","status","duration","timestamp","timestampLocal"
 "Registration of a test company @high @middle @low","Repeatedly checks and deletes companies until none remain","failed",19615,"2025-07-04T08:54:26.209Z","04. 07. 2025 10:54"
 "Registration of a test company @high @middle @low","Register a new company","passed",13222,"2025-07-04T08:54:39.492Z","04. 07. 2025 10:54"
