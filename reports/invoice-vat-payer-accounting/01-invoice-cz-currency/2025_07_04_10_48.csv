@@ -1,3 +1,4 @@
+# Testy prošly, pouze jeden je neznámý - prošel ale byla v chyba v názvu souboru kde byla čárka v příštím runu budue opraveno
 "describe","test","status","duration","timestamp","timestampLocal"
 "Registration of a test company @high @middle @low","Repeatedly checks and deletes companies until none remain","passed",13529,"2025-07-04T08:38:50.596Z","04. 07. 2025 10:38"
 "Registration of a test company @high @middle @low","Registers a new company","passed",12663,"2025-07-04T08:39:03.294Z","04. 07. 2025 10:39"
