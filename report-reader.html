@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Zobrazení reportu</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         html, body { margin: 0; padding: 0; height: 100%; }
@@ -20,14 +21,10 @@
         .table.rounded-table { border-collapse: separate; border-spacing: 0; overflow: hidden; padding-left: 4.5rem; }
         .accordion-body .table tr td, .accordion-body .table th { border-radius: 0 !important; }
         .status-icon {
-            width: 20px; height: 20px; border-radius: 50%;
-            display: inline-block; text-align: center;
-            font-size: 14px; line-height: 20px; color: white;
-            font-weight: bold; margin-right: 0.5rem;
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+            vertical-align: middle;
         }
-        .status-passed { background-color: #28a745; }
-        .status-failed { background-color: #dc3545; }
-        .status-unknown { background-color: #6c757d; }
         .card-body canvas {
             max-width: 100%;
             height: 280px !important;
@@ -49,15 +46,15 @@
                         <h6 class="card-subtitle text-muted mb-3">📊 Výsledky</h6>
                         <ul class="list-group list-group-flush fs-6">
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <span><span class="status-icon status-passed me-2">✔</span>Úspěšné</span>
+                                <span><i class="bi bi-check2-circle text-success status-icon"></i>Úspěšné</span>
                                 <span class="badge bg-success rounded-pill" id="passedCount">0</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <span><span class="status-icon status-failed me-2">✖</span>Neúspěšné</span>
+                                <span><i class="bi bi-x-circle text-danger status-icon"></i>Neúěšné</span>
                                 <span class="badge bg-danger rounded-pill" id="failedCount">0</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <span><span class="status-icon status-unknown me-2">?</span>Neznámé</span>
+                                <span><i class="bi bi-exclamation-circle text-secondary status-icon"></i>Neznámé</span>
                                 <span class="badge bg-secondary rounded-pill" id="unknownCount">0</span>
                             </li>
                         </ul>
@@ -65,16 +62,16 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div id="testInfo" class="card shadow-sm border-0 h-100">
+                <div class="card shadow-sm border-0 h-100">
                     <div class="card-body">
-                        <h5 class="card-title text-muted fw-bold mb-3">🧁 Graf výsledků</h5>
+                        <h5 class="card-title text-muted fw-bold mb-3">🢁 Graf výsledků</h5>
                         <canvas id="testPieChart" width="300" height="300"></canvas>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-4">
-                <div id="" class="card shadow-sm border-0 h-100">
+                <div class="card shadow-sm border-0 h-100">
                     <div class="card-body">
                         <h5 class="card-title text-muted fw-bold mb-3">Poznámka</h5>
                         <p id="csvNote" class="px-3"></p>
@@ -82,7 +79,6 @@
                 </div>
             </div>
         </div>
-
 
         <div class="accordion" id="accordionSuites"></div>
     </div>
@@ -116,7 +112,6 @@
             const headers = lines[0].split(',').map(h => h.replace(/^"|"$/g, '').trim());
             const rows = lines.slice(1).map(line => line.split(',').map(cell => cell.replace(/^"|"$/g, '').trim()));
 
-            // Zobraz poznámku
             if (commentText) {
                 const noteEl = document.getElementById('csvNote');
                 noteEl.textContent = commentText;
@@ -150,7 +145,7 @@
             new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Úspěšné', 'Neúspěšné', 'Neznámé'],
+                    labels: ['Úspěšné', 'Neúěšné', 'Neznámé'],
                     datasets: [{
                         data: [passed, failed, unknown],
                         backgroundColor: ['#28a745', '#dc3545', '#6c757d']
@@ -158,9 +153,7 @@
                 },
                 options: {
                     cutout: '60%',
-                    plugins: {
-                        legend: { position: 'bottom' }
-                    }
+                    plugins: { legend: { position: 'bottom' } }
                 }
             });
 
@@ -181,26 +174,24 @@
                 const suiteId = `suite-${idx}`;
                 const suiteCollapseId = `collapse-${idx}`;
 
-                let hasFailed = false, hasPassed = false;
-                tests.forEach(row => {
-                    const status = (row[statusIndex] || '').toLowerCase();
-                    if (status === 'failed') hasFailed = true;
-                    if (status === 'passed') hasPassed = true;
-                });
-
-                let suiteIconClass = 'status-unknown', suiteSymbol = '?';
-                if (hasFailed) { suiteIconClass = 'status-failed'; suiteSymbol = '✖'; }
-                else if (hasPassed) { suiteIconClass = 'status-passed'; suiteSymbol = '✔'; }
+                let suiteSymbol = '<i class="bi bi-exclamation-circle text-secondary status-icon"></i>';
+                if (tests.some(row => (row[statusIndex] || '').toLowerCase() === 'failed')) {
+                    suiteSymbol = '<i class="bi bi-x-circle text-danger status-icon"></i>';
+                } else if (tests.some(row => (row[statusIndex] || '').toLowerCase() === 'passed')) {
+                    suiteSymbol = '<i class="bi bi-check2-circle text-success status-icon"></i>';
+                }
 
                 const rowsHtml = tests.map(row => {
                     const status = (row[statusIndex] || '').toLowerCase();
-                    let iconClass = 'status-unknown', symbol = '?';
-                    if (status === 'passed') { iconClass = 'status-passed'; symbol = '✔'; }
-                    else if (status === 'failed') { iconClass = 'status-failed'; symbol = '✖'; }
-
+                    let symbol = '<i class="bi bi-exclamation-circle text-secondary status-icon"></i>';
+                    if (status === 'passed') {
+                        symbol = '<i class="bi bi-check2-circle text-success status-icon"></i>';
+                    } else if (status === 'failed') {
+                        symbol = '<i class="bi bi-x-circle text-danger status-icon"></i>';
+                    }
                     return `
         <tr>
-            <td><span class="status-icon ${iconClass}">${symbol}</span></td>
+            <td>${symbol}</td>
             <td>${row[testIndex] || ''}</td>
             <td>${row[durationIndex]}</td>
             <td>${row[timestampLocalIndex]}</td>
@@ -211,7 +202,7 @@
                     <h2 class="accordion-header" id="${suiteId}">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#${suiteCollapseId}" aria-expanded="false" aria-controls="${suiteCollapseId}">
-                            <span class="status-icon ${suiteIconClass}">${suiteSymbol}</span> ${suiteName}
+                            ${suiteSymbol} ${suiteName}
                         </button>
                     </h2>
                     <div id="${suiteCollapseId}" class="accordion-collapse collapse" aria-labelledby="${suiteId}" data-bs-parent="#accordionSuites">
@@ -240,7 +231,6 @@
             console.error('❌ Chyba při zpracování:', err);
         });
 </script>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
