@@ -1,3 +1,4 @@
+# Testy prošli pouze 12 souborů je neznámích kvůli názvu do příštího runu opraveno
 "describe","test","status","duration","timestamp","timestampLocal"
 "Registration of a test company @high @middle @low","Repeatedly checks and deletes companies until none remain","passed",12637,"2025-07-04T09:05:11.505Z","04. 07. 2025 11:05"
 "Registration of a test company @high @middle @low","Register a new company","passed",14559,"2025-07-04T09:05:26.093Z","04. 07. 2025 11:05"
