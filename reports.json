@@ -26,6 +26,19 @@
       "2025_07_02_15_16.csv"
     ]
   },
+  "invoice-no-vat-payer-accounting": {
+    "01-invoice-cz-currency": [
+      "2025_07_09_19_09.csv"
+    ],
+    "02-invoice-eur-currency": [
+      "2025_07_09_19_09.csv"
+    ],
+    "03-basic-info-and-contact": [
+      "2025_07_09_19_21.csv"
+    ],
+    "04-datum-and-payment": [],
+    "05-invoice-item": []
+  },
   "invoice-vat-payer-accounting": {
     "01-invoice-cz-currency": [
       "2025_07_04_10_48.csv",
