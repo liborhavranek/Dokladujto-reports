@@ -40,8 +40,12 @@
     "03-basic-info-and-contact": [
       "2025_07_09_19_21.csv"
     ],
-    "04-datum-and-payment": [],
-    "05-invoice-item": []
+    "04-datum-and-payment": [
+      "2025_07_09_19_49.csv"
+    ],
+    "05-invoice-item": [
+      "2025_07_09_19_58.csv"
+    ]
   },
   "invoice-vat-payer-accounting": {
     "01-invoice-cz-currency": [
