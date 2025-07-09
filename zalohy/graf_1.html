@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <title>Uživatelské statistiky - Dokladuj.to</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 2rem;
+      background: #f8f9fa;
+    }
+
+    h2 {
+      margin-bottom: 1rem;
+      text-align: center;
+      color: #343a40;
+    }
+
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .chart-card {
+      background: #fff;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 0.5rem 1.2rem rgba(0, 0, 0, 0.05);
+    }
+
+    canvas {
+      width: 100% !important;
+      height: 300px !important;
+    }
+  </style>
+</head>
+<body>
+<h2>📊 Uživatelské statistiky systému Dokladuj.to</h2>
+
+<div class="charts-grid">
+  <!-- Aktivní uživatelé v čase -->
+  <div class="chart-card">
+    <h4>📈 Vývoj počtu aktivních uživatelů</h4>
+    <canvas id="activeUsersChart"></canvas>
+  </div>
+
+  <!-- Nově registrovaní -->
+  <div class="chart-card">
+    <h4>🆕 Nově registrovaní uživatelé</h4>
+    <canvas id="newUsersChart"></canvas>
+  </div>
+
+  <!-- Přihlášení a průměr -->
+  <div class="chart-card">
+    <h4>🔐 Přihlášení uživatelů (měsíc)</h4>
+    <canvas id="loginsChart"></canvas>
+  </div>
+
+  <!-- Tarify -->
+  <div class="chart-card">
+    <h4>📦 Rozložení uživatelů podle tarifů</h4>
+    <canvas id="tariffChart"></canvas>
+  </div>
+</div>
+
+<script>
+  // 🔹 Vývoj aktivních uživatelů
+  new Chart(document.getElementById("activeUsersChart"), {
+    type: 'line',
+    data: {
+      labels: ["1/24", "2/24", "3/24", "4/24", "5/24", "6/24", "7/24"],
+      datasets: [{
+        label: "Počet aktivních uživatelů",
+        data: [400, 420, 450, 470, 490, 510, 528],
+        borderColor: "#508FFE",
+        fill: false,
+        tension: 0.2
+      }]
+    },
+    options: {
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { beginAtZero: true, title: { display: true, text: "Uživatelé" } },
+        x: { title: { display: true, text: "Měsíc" } }
+      }
+    }
+  });
+
+  // 🔹 Nově registrovaní
+  new Chart(document.getElementById("newUsersChart"), {
+    type: 'bar',
+    data: {
+      labels: ["květen", "červen", "červenec"],
+      datasets: [{
+        label: "Noví uživatelé",
+        data: [45, 67, 82],
+        backgroundColor: "#66BB6A"
+      }]
+    },
+    options: {
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { beginAtZero: true, title: { display: true, text: "Počet" } }
+      }
+    }
+  });
+
+  // 🔹 Přihlášení
+  new Chart(document.getElementById("loginsChart"), {
+    type: 'bar',
+    data: {
+      labels: ["týden 1", "týden 2", "týden 3", "týden 4"],
+      datasets: [
+        {
+          label: "Celkový počet přihlášení",
+          data: [320, 450, 390, 410],
+          backgroundColor: "#42A5F5"
+        },
+        {
+          label: "Průměr na uživatele",
+          data: [2.3, 2.7, 2.5, 2.4],
+          type: 'line',
+          borderColor: "#FFA726",
+          fill: false,
+          yAxisID: 'y1'
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: { beginAtZero: true, title: { display: true, text: "Přihlášení" } },
+        y1: {
+          position: 'right',
+          beginAtZero: true,
+          title: { display: true, text: "Průměr" },
+          grid: { drawOnChartArea: false }
+        }
+      }
+    }
+  });
+
+  // 🔹 Tarify
+  new Chart(document.getElementById("tariffChart"), {
+    type: 'pie',
+    data: {
+      labels: ["Basic", "Standard", "Premium"],
+      datasets: [{
+        data: [120, 300, 92],
+        backgroundColor: ["#FFC107", "#2196F3", "#9C27B0"]
+      }]
+    },
+    options: {
+      plugins: {
+        legend: { position: 'bottom' }
+      }
+    }
+  });
+</script>
+
+</body>
+</html>
