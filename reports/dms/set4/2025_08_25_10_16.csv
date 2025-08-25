@@ -1,4 +1,4 @@
-# Spuštění a vyhodnocení testů po Binově sprintu S165 vylepšení 34
+# Spuštění a vyhodnocení testů po Binově sprintu S165 vylepšení 34 - GAMA
 "describe","test","status","duration","timestamp","timestampLocal"
 "Registration test company @high @middle @low","Repeatedly checks and deletes companies until none remain","passed",10143,"2025-08-25T10:07:01.268Z","25. 08. 2025 12:07"
 "Registration test company @high @middle @low","Registration company","passed",16174,"2025-08-25T10:07:17.515Z","25. 08. 2025 12:07"
