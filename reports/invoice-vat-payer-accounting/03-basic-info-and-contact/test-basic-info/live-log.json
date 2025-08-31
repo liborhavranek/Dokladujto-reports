@@ -1,0 +1,466 @@
+[
+  {
+    "describe": "Registration of a test company @high @middle @low",
+    "test": "Repeatedly checks and deletes companies until none remain",
+    "status": "passed",
+    "duration": 13259,
+    "timestamp": "2025-08-31T17:27:06.881Z",
+    "timestampLocal": "31. 08. 2025 19:27"
+  },
+  {
+    "describe": "Registration of a test company @high @middle @low",
+    "test": "Register a new company",
+    "status": "passed",
+    "duration": 15057,
+    "timestamp": "2025-08-31T17:27:22.004Z",
+    "timestampLocal": "31. 08. 2025 19:27"
+  },
+  {
+    "describe": "Configure payment methods for company @high @middle @low",
+    "test": "Configure payment methods",
+    "status": "passed",
+    "duration": 14702,
+    "timestamp": "2025-08-31T17:27:37.593Z",
+    "timestampLocal": "31. 08. 2025 19:27"
+  },
+  {
+    "describe": "Configure payment methods for company @high @middle @low",
+    "test": "Set light-regime",
+    "status": "passed",
+    "duration": 3180,
+    "timestamp": "2025-08-31T17:27:41.022Z",
+    "timestampLocal": "31. 08. 2025 19:27"
+  },
+  {
+    "describe": "Create contact Bene for company @high @middle @low",
+    "test": "Creating contact Bene",
+    "status": "passed",
+    "duration": 11744,
+    "timestamp": "2025-08-31T17:27:54.219Z",
+    "timestampLocal": "31. 08. 2025 19:27"
+  },
+  {
+    "describe": "Note field cant have more than 250 chars @high @middle @low",
+    "test": "Note field on the invoice cant have more than 250 char",
+    "status": "passed",
+    "duration": 24961,
+    "timestamp": "2025-08-31T17:28:20.367Z",
+    "timestampLocal": "31. 08. 2025 19:28"
+  },
+  {
+    "describe": "Note field cant have more than 250 chars on the proforma and deposit @low",
+    "test": "Delete all invoices",
+    "status": "passed",
+    "duration": 9458,
+    "timestamp": "2025-08-31T17:28:31.276Z",
+    "timestampLocal": "31. 08. 2025 19:28"
+  },
+  {
+    "describe": "Note field cant have more than 250 chars on the proforma and deposit @low",
+    "test": "Note field on the proforma cant have more than 250 char",
+    "status": "passed",
+    "duration": 19321,
+    "timestamp": "2025-08-31T17:28:50.923Z",
+    "timestampLocal": "31. 08. 2025 19:28"
+  },
+  {
+    "describe": "Note field cant have more than 250 chars on the proforma and deposit @low",
+    "test": "Note field on the deposit cant have more than 250 char",
+    "status": "passed",
+    "duration": 18685,
+    "timestamp": "2025-08-31T17:29:09.845Z",
+    "timestampLocal": "31. 08. 2025 19:29"
+  },
+  {
+    "describe": "Note field cant have more than 250 chars on the corrective @low",
+    "test": "Delete all invoices",
+    "status": "passed",
+    "duration": 12343,
+    "timestamp": "2025-08-31T17:29:24.618Z",
+    "timestampLocal": "31. 08. 2025 19:29"
+  },
+  {
+    "describe": "Note field cant have more than 250 chars on the corrective @low",
+    "test": "Set invoice for corrective",
+    "status": "passed",
+    "duration": 15691,
+    "timestamp": "2025-08-31T17:29:40.597Z",
+    "timestampLocal": "31. 08. 2025 19:29"
+  },
+  {
+    "describe": "Note field cant have more than 250 chars on the corrective @low",
+    "test": "Note field on the corrective cant have more than 250 char",
+    "status": "passed",
+    "duration": 18363,
+    "timestamp": "2025-08-31T17:29:59.156Z",
+    "timestampLocal": "31. 08. 2025 19:29"
+  },
+  {
+    "describe": "Set contacts (web email fax tel) on the invoice setting and propagation on the all invoice @middle @low",
+    "test": "Set contacts (web email fax tel) in the invoice setting",
+    "status": "passed",
+    "duration": 13146,
+    "timestamp": "2025-08-31T17:30:13.981Z",
+    "timestampLocal": "31. 08. 2025 19:30"
+  },
+  {
+    "describe": "Set contacts (web email fax tel) on the invoice setting and propagation on the all invoice @middle @low",
+    "test": "Contacts are propagated on the invoice",
+    "status": "passed",
+    "duration": 16146,
+    "timestamp": "2025-08-31T17:30:30.285Z",
+    "timestampLocal": "31. 08. 2025 19:30"
+  },
+  {
+    "describe": "Set contacts (web email fax tel) on the invoice setting and propagation on the all invoice @middle @low",
+    "test": "Contacts are propagated on the edited invoice",
+    "status": "passed",
+    "duration": 8957,
+    "timestamp": "2025-08-31T17:30:39.577Z",
+    "timestampLocal": "31. 08. 2025 19:30"
+  },
+  {
+    "describe": "Set contacts (web email fax tel) on the invoice setting and propagation on the all invoice @middle @low",
+    "test": "Contacts are propagated on the proforma",
+    "status": "passed",
+    "duration": 17258,
+    "timestamp": "2025-08-31T17:30:57.601Z",
+    "timestampLocal": "31. 08. 2025 19:30"
+  },
+  {
+    "describe": "Set contacts (web email fax tel) on the invoice setting and propagation on the all invoice @middle @low",
+    "test": "Contacts are propagated on the edited proforma",
+    "status": "passed",
+    "duration": 9751,
+    "timestamp": "2025-08-31T17:31:07.524Z",
+    "timestampLocal": "31. 08. 2025 19:31"
+  },
+  {
+    "describe": "Set contacts (web email fax tel) on the invoice setting and propagation on the all invoice @middle @low",
+    "test": "Contacts are propagated on the deposit",
+    "status": "passed",
+    "duration": 14296,
+    "timestamp": "2025-08-31T17:31:22.035Z",
+    "timestampLocal": "31. 08. 2025 19:31"
+  },
+  {
+    "describe": "Set contacts (web email fax tel) on the invoice setting and propagation on the all invoice @middle @low",
+    "test": "Contacts are propagated on the edited deposit",
+    "status": "passed",
+    "duration": 9329,
+    "timestamp": "2025-08-31T17:31:31.583Z",
+    "timestampLocal": "31. 08. 2025 19:31"
+  },
+  {
+    "describe": "Set contacts (web email fax tel) on the invoice setting and propagation on the all invoice @middle @low",
+    "test": "Delete all invoices",
+    "status": "passed",
+    "duration": 3973,
+    "timestamp": "2025-08-31T17:31:35.713Z",
+    "timestampLocal": "31. 08. 2025 19:31"
+  },
+  {
+    "describe": "Set contacts (web email fax tel) on the invoice setting and propagation on the all invoice @middle @low",
+    "test": "Prepare invoice for corrective",
+    "status": "passed",
+    "duration": 16581,
+    "timestamp": "2025-08-31T17:31:52.452Z",
+    "timestampLocal": "31. 08. 2025 19:31"
+  },
+  {
+    "describe": "Set contacts (web email fax tel) on the invoice setting and propagation on the all invoice @middle @low",
+    "test": "Contacts are propagated on the corrective",
+    "status": "passed",
+    "duration": 15410,
+    "timestamp": "2025-08-31T17:32:08.042Z",
+    "timestampLocal": "31. 08. 2025 19:32"
+  },
+  {
+    "describe": "Set contacts (web email fax tel) on the invoice setting and propagation on the all invoice @middle @low",
+    "test": "Contacts are propagated on the edited corrective",
+    "status": "passed",
+    "duration": 8509,
+    "timestamp": "2025-08-31T17:32:16.751Z",
+    "timestampLocal": "31. 08. 2025 19:32"
+  },
+  {
+    "describe": "Set contacts (web email fax tel) on the invoice setting and propagation on the all invoice @middle @low",
+    "test": "Smazaní kontaktů z nastavení",
+    "status": "passed",
+    "duration": 6119,
+    "timestamp": "2025-08-31T17:32:23.005Z",
+    "timestampLocal": "31. 08. 2025 19:32"
+  },
+  {
+    "describe": "Add contact on the invoice @high @middle @low",
+    "test": "Delete all invoices",
+    "status": "passed",
+    "duration": 10904,
+    "timestamp": "2025-08-31T17:32:36.918Z",
+    "timestampLocal": "31. 08. 2025 19:32"
+  },
+  {
+    "describe": "Add contact on the invoice @high @middle @low",
+    "test": "Add new contact on the invoice",
+    "status": "passed",
+    "duration": 23781,
+    "timestamp": "2025-08-31T17:33:00.849Z",
+    "timestampLocal": "31. 08. 2025 19:33"
+  },
+  {
+    "describe": "Add contact on the invoice @high @middle @low",
+    "test": "Edit contact on the invoice",
+    "status": "passed",
+    "duration": 18007,
+    "timestamp": "2025-08-31T17:33:19.015Z",
+    "timestampLocal": "31. 08. 2025 19:33"
+  },
+  {
+    "describe": "Add contact on the invoice @high @middle @low",
+    "test": "Propsání kontaktu na ODD",
+    "status": "passed",
+    "duration": 15118,
+    "timestamp": "2025-08-31T17:33:34.291Z",
+    "timestampLocal": "31. 08. 2025 19:33"
+  },
+  {
+    "describe": "Add contact on the invoice @high @middle @low",
+    "test": "Smazání kontaktu",
+    "status": "passed",
+    "duration": 4613,
+    "timestamp": "2025-08-31T17:33:38.972Z",
+    "timestampLocal": "31. 08. 2025 19:33"
+  },
+  {
+    "describe": "Add contact to the proforma and propagation on the deposit and final invoice @middle @low",
+    "test": "Delete all invoices",
+    "status": "passed",
+    "duration": 9313,
+    "timestamp": "2025-08-31T17:33:50.614Z",
+    "timestampLocal": "31. 08. 2025 19:33"
+  },
+  {
+    "describe": "Add contact to the proforma and propagation on the deposit and final invoice @middle @low",
+    "test": "Add contact on the proforma",
+    "status": "passed",
+    "duration": 20480,
+    "timestamp": "2025-08-31T17:34:11.224Z",
+    "timestampLocal": "31. 08. 2025 19:34"
+  },
+  {
+    "describe": "Add contact to the proforma and propagation on the deposit and final invoice @middle @low",
+    "test": "Edit contact on the proforma",
+    "status": "passed",
+    "duration": 15317,
+    "timestamp": "2025-08-31T17:34:26.649Z",
+    "timestampLocal": "31. 08. 2025 19:34"
+  },
+  {
+    "describe": "Add contact to the proforma and propagation on the deposit and final invoice @middle @low",
+    "test": "Propagation contact on the deposit",
+    "status": "passed",
+    "duration": 11646,
+    "timestamp": "2025-08-31T17:34:38.400Z",
+    "timestampLocal": "31. 08. 2025 19:34"
+  },
+  {
+    "describe": "Add contact to the proforma and propagation on the deposit and final invoice @middle @low",
+    "test": "Propagation contact on the final invoice",
+    "status": "passed",
+    "duration": 11333,
+    "timestamp": "2025-08-31T17:34:49.826Z",
+    "timestampLocal": "31. 08. 2025 19:34"
+  },
+  {
+    "describe": "Add contact to the proforma and propagation on the deposit and final invoice @middle @low",
+    "test": "Smazání kontaktu",
+    "status": "passed",
+    "duration": 4444,
+    "timestamp": "2025-08-31T17:34:54.326Z",
+    "timestampLocal": "31. 08. 2025 19:34"
+  },
+  {
+    "describe": "Add delivery address to the contact @high @middle @low",
+    "test": "Add new contact with two delivery address on the invoice",
+    "status": "passed",
+    "duration": 32045,
+    "timestamp": "2025-08-31T17:35:27.823Z",
+    "timestampLocal": "31. 08. 2025 19:35"
+  },
+  {
+    "describe": "Add delivery address to the contact @high @middle @low",
+    "test": "Delete contact",
+    "status": "passed",
+    "duration": 4252,
+    "timestamp": "2025-08-31T17:35:32.139Z",
+    "timestampLocal": "31. 08. 2025 19:35"
+  },
+  {
+    "describe": "Add delivery address to the contact @high @middle @low",
+    "test": "Add new contact with two delivery address on the proforma",
+    "status": "passed",
+    "duration": 31235,
+    "timestamp": "2025-08-31T17:36:04.710Z",
+    "timestampLocal": "31. 08. 2025 19:36"
+  },
+  {
+    "describe": "Add delivery address to the contact @high @middle @low",
+    "test": "Delete contact",
+    "status": "passed",
+    "duration": 4450,
+    "timestamp": "2025-08-31T17:36:09.224Z",
+    "timestampLocal": "31. 08. 2025 19:36"
+  },
+  {
+    "describe": "Add header and footer text on the invoice @high @middle @low",
+    "test": "Add header text on the invoice",
+    "status": "passed",
+    "duration": 50356,
+    "timestamp": "2025-08-31T17:37:00.868Z",
+    "timestampLocal": "31. 08. 2025 19:37"
+  },
+  {
+    "describe": "Add header and footer text on the invoice @high @middle @low",
+    "test": "Add footer text on the invoice",
+    "status": "passed",
+    "duration": 44528,
+    "timestamp": "2025-08-31T17:37:45.489Z",
+    "timestampLocal": "31. 08. 2025 19:37"
+  },
+  {
+    "describe": "Add header and footer text on the proforma @high @middle @low",
+    "test": "Add header text on the proforma",
+    "status": "passed",
+    "duration": 50658,
+    "timestamp": "2025-08-31T17:38:37.341Z",
+    "timestampLocal": "31. 08. 2025 19:38"
+  },
+  {
+    "describe": "Add header and footer text on the proforma @high @middle @low",
+    "test": "Add footer text on the proforma",
+    "status": "passed",
+    "duration": 46661,
+    "timestamp": "2025-08-31T17:39:24.084Z",
+    "timestampLocal": "31. 08. 2025 19:39"
+  },
+  {
+    "describe": "Add footer text in deposit @low",
+    "test": "Create proforma",
+    "status": "passed",
+    "duration": 20804,
+    "timestamp": "2025-08-31T17:39:46.113Z",
+    "timestampLocal": "31. 08. 2025 19:39"
+  },
+  {
+    "describe": "Add footer text in deposit @low",
+    "test": "Add header text and create footer text",
+    "status": "passed",
+    "duration": 54102,
+    "timestamp": "2025-08-31T17:40:40.285Z",
+    "timestampLocal": "31. 08. 2025 19:40"
+  },
+  {
+    "describe": "Add footer text in corrective @low",
+    "test": "Create invoice",
+    "status": "passed",
+    "duration": 19495,
+    "timestamp": "2025-08-31T17:41:01.019Z",
+    "timestampLocal": "31. 08. 2025 19:41"
+  },
+  {
+    "describe": "Add footer text in corrective @low",
+    "test": "Add header text and create footer text",
+    "status": "passed",
+    "duration": 53572,
+    "timestamp": "2025-08-31T17:41:54.660Z",
+    "timestampLocal": "31. 08. 2025 19:41"
+  },
+  {
+    "describe": "Footer and header text when template is not set invoice @low",
+    "test": "Delete all invoices",
+    "status": "passed",
+    "duration": 9616,
+    "timestamp": "2025-08-31T17:42:05.307Z",
+    "timestampLocal": "31. 08. 2025 19:42"
+  },
+  {
+    "describe": "Footer and header text when template is not set invoice @low",
+    "test": "Header and footer text is on the layout of invoice when template is clear",
+    "status": "failed",
+    "duration": 22179,
+    "timestamp": "2025-08-31T17:42:27.511Z",
+    "timestampLocal": "31. 08. 2025 19:42"
+  },
+  {
+    "describe": "Footer and header text when template is not set invoice @low",
+    "test": "Header and footer text is in the downloaded invoice",
+    "status": "failed",
+    "duration": 4970,
+    "timestamp": "2025-08-31T17:42:32.589Z",
+    "timestampLocal": "31. 08. 2025 19:42"
+  },
+  {
+    "describe": "Footer and header text when template is not set invoice @low",
+    "test": "Header and footer text is on the layout of corrective when template is clear",
+    "status": "failed",
+    "duration": 7037,
+    "timestamp": "2025-08-31T17:42:39.666Z",
+    "timestampLocal": "31. 08. 2025 19:42"
+  },
+  {
+    "describe": "Footer and header text when template is not set invoice @low",
+    "test": "Header and footer text is in the downloaded corrective",
+    "status": "failed",
+    "duration": 4655,
+    "timestamp": "2025-08-31T17:42:44.384Z",
+    "timestampLocal": "31. 08. 2025 19:42"
+  },
+  {
+    "describe": "Footer and header text when template is not set proforma @low",
+    "test": "Delete all invoices",
+    "status": "passed",
+    "duration": 6048,
+    "timestamp": "2025-08-31T17:42:51.544Z",
+    "timestampLocal": "31. 08. 2025 19:42"
+  },
+  {
+    "describe": "Footer and header text when template is not set proforma @low",
+    "test": "Header and footer text is on the layout of proforma when template is clear",
+    "status": "failed",
+    "duration": 22594,
+    "timestamp": "2025-08-31T17:43:14.172Z",
+    "timestampLocal": "31. 08. 2025 19:43"
+  },
+  {
+    "describe": "Footer and header text when template is not set proforma @low",
+    "test": "Header and footer text is in the downloaded proforma",
+    "status": "failed",
+    "duration": 4696,
+    "timestamp": "2025-08-31T17:43:18.938Z",
+    "timestampLocal": "31. 08. 2025 19:43"
+  },
+  {
+    "describe": "Footer and header text when template is not set proforma @low",
+    "test": "Header and footer text is on the layout of deposit when template is clear",
+    "status": "failed",
+    "duration": 7228,
+    "timestamp": "2025-08-31T17:43:26.214Z",
+    "timestampLocal": "31. 08. 2025 19:43"
+  },
+  {
+    "describe": "Footer and header text when template is not set proforma @low",
+    "test": "Header and footer text is in the downloaded deposit",
+    "status": "failed",
+    "duration": 4637,
+    "timestamp": "2025-08-31T17:43:30.905Z",
+    "timestampLocal": "31. 08. 2025 19:43"
+  },
+  {
+    "describe": "Delete Company @high @middle @low",
+    "test": "Delete company",
+    "status": "passed",
+    "duration": 15989,
+    "timestamp": "2025-08-31T17:43:47.664Z",
+    "timestampLocal": "31. 08. 2025 19:43"
+  }
+]
